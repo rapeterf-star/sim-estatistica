@@ -1,0 +1,162 @@
+\documentclass[12pt]{article}
+\usepackage[brazilian]{babel}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\setlength{\emergencystretch}{3em}
+
+\title{Amostragem e inferência estatística em registros de óbito infantil do SIM}
+\author{Estudo estatístico -- Porto Alegre}
+\date{8 de novembro de 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Este trabalho aplica amostragem aleatória simples, intervalos de confiança e testes de hipóteses a registros do Sistema de Informações sobre Mortalidade (SIM) de Porto Alegre. A população analítica foi definida como 1.776 registros não fetais com nascimento e óbito registrados por mês/ano e diferença de zero a 11 meses entre as competências. Dessa população foi sorteada, sem reposição, uma amostra aleatória simples de 316 registros, com confiança de 95\%, erro planejado de cinco pontos percentuais, proporção conservadora de 0,5 e semente 2026. A análise incluiu dois testes para proporções e dois para médias, comparando resultados amostrais com parâmetros calculados diretamente na população. A proporção masculina amostral foi 55,06\% e a idade média aproximada ao óbito foi 1,424 mês. As conclusões descrevem a composição dos registros elegíveis do arquivo; não estimam risco causal de mortalidade por sexo.
+\end{abstract}
+
+\section{Fonte e contexto}
+
+A base é o conjunto \href{https://dadosabertos.poa.br/dataset/mortalidade-e-obitos}{SIM -- Dados Abertos de Porto Alegre}, publicado pela Secretaria Municipal de Saúde. O CSV recebido possui 135.548 linhas e 14 variáveis, com registros de óbitos entre 2011 e 2021.
+
+O foco do exercício é a composição por sexo entre óbitos infantis. O arquivo não tem peso ao nascer e registra nascimento e óbito apenas por mês/ano. Assim, a idade ao óbito foi derivada como diferença entre as competências mensais, sem precisão em dias.
+
+\section{População e unidade amostral}
+
+A população analítica compreende registros não fetais com mês/ano válido de nascimento e de óbito, ano do óbito entre 2011 e 2021 e diferença não negativa menor que 12 meses entre as competências. O conjunto resultante tem \textbf{N = 1.776 registros}. A unidade amostral é uma linha elegível do CSV. Linhas integralmente repetidas foram mantidas, pois não houve validação da fonte que autorizasse removê-las; portanto, esta população representa registros no arquivo, não necessariamente indivíduos distintos.
+
+As variáveis principais são sexo, idade aproximada ao óbito e ocorrência de nascimento e óbito na mesma competência. O sexo pode ser feminino, masculino ou não informado; as comparações por sexo usam somente os registros com sexo conhecido. A idade é uma diferença de mês/ano, em valores inteiros de zero a 11. Um valor zero significa que nascimento e óbito foram registrados no mesmo mês/ano, não que a criança morreu antes de completar 28 dias.
+
+\section{Dimensionamento e seleção da amostra}
+
+Foram definidos nível de confiança de 95\% (\(Z=1{,}96\)), margem de erro de cinco pontos percentuais (\(d=0{,}05\)), proporção de planejamento \(p=0{,}5\) e população finita \(N=1.776\). O tamanho inicial para população infinita foi:
+
+\[
+n_0 = \frac{Z^2p(1-p)}{d^2}
+= \frac{1{,}96^2 \cdot 0{,}5 \cdot 0{,}5}{0{,}05^2}
+= 384{,}16.
+\]
+
+Aplicando a correção para população finita:
+
+\[
+n = \left\lceil \frac{n_0}{1 + (n_0 - 1)/N} \right\rceil = 316.
+\]
+
+Para \(N=1.776\), o valor antes do arredondamento é aproximadamente \(315{,}99\); arredondando para cima, obtém-se \(n=316\). O cálculo foi reproduzido no código do projeto. A calculadora USP/Bauru indicada no enunciado estava fora do ar em 09/11/2026; por isso, o valor foi conferido na calculadora de tamanho de amostra da SurveyMonkey (\url{https://pt.surveymonkey.com/learn/research-and-analysis/sample-size-calculator/}), com população 1.776, confiança de 95\% e margem de erro de 5\%, que também resulta em \(n=316\).
+
+A amostra foi sorteada uma única vez, sem reposição, após ordenar pelo índice original da linha:
+
+\begin{verbatim}
+amostra = populacao.sort_values("indice_original").sample(
+    n=316, replace=False, random_state=2026
+)
+\end{verbatim}
+
+A fração amostral é 17,79\%. Como supera 10\%, a correção para população finita foi incorporada aos erros-padrão e intervalos. O sorteio pode ser reproduzido pela semente 2026.
+
+\section{Descrição da população e da amostra}
+
+\begin{center}
+\begin{tabular}{p{7cm}rr}
+\toprule
+Medida & População (\(N=1.776\)) & AAS (\(n=316\)) \\
+\midrule
+Idade média aproximada & 1,476 mês & 1,424 mês \\
+Desvio-padrão da idade & 2,426 meses & 2,485 meses \\
+Mediana da idade & 0 mês & 0 mês \\
+Moda da idade aproximada & 0 mês & 0 mês \\
+Proporção masculina (sexo conhecido) & 54,89\% & 55,06\% \\
+Mesmo mês/ano (sexo conhecido) & 52,74\% & 53,16\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Na população, a mediana e a moda iguais a zero não indicam ausência de cálculo: 939 dos 1.776 registros (52,87\%) têm diferença de mês/ano igual a zero. Assim, pelo menos metade dos valores é zero, o que resulta em mediana zero; zero também é a categoria mais frequente, portanto é a moda. Na amostra, 168 de 316 registros (53,16\%) têm valor zero, e mediana e moda também são zero. Zero significa que nascimento e óbito foram registrados na mesma competência mensal, não uma idade exata em dias. Havia 971 registros masculinos e 798 femininos com sexo conhecido na população. As distribuições por sexo, faixas de idade aproximada (zero a um, dois a três, quatro a cinco e seis a 11 meses) e ocorrência na mesma competência são apresentadas nos Painéis 1 e 2. Diferenças entre as medidas amostrais e populacionais são esperadas pela variabilidade do sorteio.
+
+\section{Inferência estatística}
+
+Todos os testes foram definidos com significância de 5\%, e os intervalos têm 95\% de confiança. Parâmetros populacionais foram calculados sobre a população completa; estimativas, intervalos e testes inferenciais usam a AAS.
+
+\subsection{H1 -- Uma proporção}
+
+\textbf{Pergunta:} os meninos têm, entre os óbitos infantis, participação maior do que entre os nascimentos?
+
+\textbf{Justificativa da referência:} entre os 197.780 nascidos vivos de Porto Alegre registrados no SINASC de 2011 a 2021, 51,15\% são meninos. Se o sexo não influenciasse o óbito infantil, a composição por sexo dos óbitos repetiria a dos nascimentos; uma proporção maior de meninos entre os óbitos indica sobremortalidade masculina relativa.
+
+\[
+H_0: \pi \le 0{,}5115
+\qquad
+H_1: \pi > 0{,}5115.
+\]
+
+Foi aplicado teste Z unilateral de uma proporção, com intervalo de Wald corrigido para população finita. A amostra teve 174 meninos em 316 registros com sexo conhecido, \(P=55{,}06\%\); o parâmetro populacional é \(\pi=54{,}89\%\). O IC 95\% é de 50,09\% a 60,04\%, e o limite inferior unilateral de 95\% é 50,89\%; \(Z=1{,}536\) e \(p=0{,}0623\). Não se rejeita \(H_0\) a 5\%: a amostra aponta na direção de \(H_1\), mas a evidência não é suficiente. Como a população está disponível, sabe-se que \(H_0\) é falsa (\(54{,}89\% > 51{,}15\%\)). Trata-se de um \textbf{erro tipo II}: a diferença real, de 3,7 pontos percentuais, é pequena em relação ao erro-padrão de cerca de 2,5 pontos percentuais, e o teste tem pouco poder para detectá-la. Com a referência simplista de 50\%, a mesma amostra levaria à rejeição (\(Z=1{,}986\); \(p=0{,}0235\)), o que mostra como a escolha do valor de referência condiciona a conclusão.
+
+\subsection{H2 -- Diferença de proporções}
+
+\textbf{Pergunta:} a proporção de registros no mesmo mês/ano do nascimento difere entre meninas e meninos?
+
+\[
+H_0: \pi_F-\pi_M=0
+\qquad
+H_1: \pi_F-\pi_M\ne 0.
+\]
+
+Foi aplicado teste Z bilateral para duas proporções e IC da diferença, com correção para população finita em cada grupo. Na amostra, as proporções foram 51,41\% para meninas e 54,60\% para meninos, com diferença \(\pi_F-\pi_M=-3{,}19\) pontos percentuais. A diferença populacional é \(-1{,}80\) ponto percentual. O IC 95\% da diferença é de \(-13{,}22\) a 6,84 pontos percentuais; \(Z=-0{,}623\) e \(p=0{,}5332\). Não se rejeita \(H_0\); a amostra não fornece evidência suficiente de diferença. O período é definido somente pela competência mensal e não deve ser interpretado como período neonatal exato.
+
+\subsection{H3 -- Uma média}
+
+\textbf{Pergunta:} em média, o óbito infantil ocorre depois do primeiro mês de calendário após o nascimento?
+
+\textbf{Justificativa da referência:} mais da metade dos registros tem diferença zero, o que indica forte concentração dos óbitos infantis logo após o nascimento. A referência \(\mu_0=1\) mês representa um padrão em que os óbitos ocorrem, em média, até o mês seguinte ao nascimento.
+
+\[
+H_0: \mu\le 1
+\qquad
+H_1: \mu> 1.
+\]
+
+Foi aplicado teste \(t\) unilateral de uma amostra e IC \(t\), ambos com correção para população finita. A média amostral é \(\bar{x}=1{,}424\) meses, ante parâmetro populacional \(\mu=1{,}476\) meses. O IC 95\% é de 1,175 a 1,673 meses, e o limite inferior unilateral de 95\% é 1,215 mês; \(t(315)=3{,}345\) e \(p=0{,}0005\). Rejeita-se \(H_0\): apesar de a mediana e a moda serem zero, a cauda de óbitos entre 2 e 11 meses eleva a média acima de 1 mês. Na população, \(\mu=1{,}476>1\), então a decisão está correta. A referência de 1 mês é operacional, não um limite clínico.
+
+\subsection{H4 -- Diferença de médias}
+
+\textbf{Pergunta:} a idade média aproximada ao óbito difere entre meninas e meninos?
+
+\[
+H_0: \mu_F-\mu_M=0
+\qquad
+H_1: \mu_F-\mu_M\ne 0.
+\]
+
+Foi aplicado teste \(t\) bilateral de Welch e IC da diferença, com correção para população finita em cada grupo. As médias amostrais foram 1,627 meses para meninas e 1,259 meses para meninos, diferença de 0,368 mês; a diferença populacional é 0,124 mês. O IC 95\% é de \(-0{,}142\) a 0,878 mês; \(t(276{,}14)=1{,}421\) e \(p=0{,}1563\). Não se rejeita \(H_0\); não há evidência suficiente de diferença entre as médias aproximadas nesta amostra.
+
+\section{Comparação e interpretação}
+
+Os intervalos de confiança dos quatro testes contêm os parâmetros correspondentes calculados na população para esta AAS. Somente H3 rejeita a hipótese nula, e essa decisão está correta na população. H1, H2 e H4 não rejeitam. Em H1, a não rejeição é um erro tipo II com efeito real de interesse (3,7 pontos percentuais) e pouco poder do teste. Em H2 e H4, as diferenças populacionais (\(-1{,}80\) ponto percentual e 0,124 mês) não são exatamente zero, de modo que a não rejeição também é formalmente um erro tipo II, mas sem relevância prática: em população finita, uma igualdade exata quase nunca ocorre. As diferenças entre estimativas pontuais e parâmetros populacionais ilustram a variabilidade amostral. Uma não rejeição não prova igualdade, e uma rejeição não implica relevância prática nem causalidade.
+
+\section{Limitações}
+
+\begin{enumerate}
+    \item Nascimento e óbito contêm apenas mês/ano; a idade é aproximada e pode classificar incorretamente registros próximos ao limite de 12 meses.
+    \item Mesma competência não identifica a duração exata entre nascimento e óbito.
+    \item Linhas integralmente repetidas foram mantidas; não foi possível confirmar se representam duplicação do arquivo ou eventos distintos.
+    \item O SIM contém somente registros de óbito. Os testes de proporção não estimam risco de morte por sexo; para isso seriam necessários denominadores de nascimentos compatíveis e desenho apropriado.
+    \item Os resultados se restringem à população analítica do arquivo e não devem ser generalizados para todas as crianças ou para relações causais.
+\end{enumerate}
+
+\section{Fonte, painéis e entrega}
+
+\begin{itemize}
+    \item Base original: \href{https://dadosabertos.poa.br/dataset/mortalidade-e-obitos}{SIM -- Dados Abertos de Porto Alegre}.
+    \item Painel 1: população -- link será inserido após publicação.
+    \item Painel 2: amostra -- link será inserido após publicação.
+    \item Painel 3: inferência -- link será inserido após publicação.
+    \item Vídeo de apresentação (máximo de cinco minutos): link será inserido após publicação no YouTube.
+\end{itemize}
+
+Os arquivos com registros individuais permanecem locais. A aplicação utiliza o resumo de estatísticas agregadas, sem identificadores ou linhas individuais.
+
+\end{document}

@@ -1,0 +1,283 @@
+{
+  "titulo": "Estudo estatístico do SIM — óbitos infantis",
+  "fonte": "SIM — Dados Abertos de Porto Alegre, Secretaria Municipal de Saúde",
+  "url_fonte": "https://dadosabertos.poa.br/dataset/mortalidade-e-obitos",
+  "periodo_obito": "2011–2021",
+  "definicao_idade": "Diferença entre mês/ano do óbito e do nascimento, em registros não fetais; valores de 0 a 11 meses.",
+  "unidade_amostral": "Linha do CSV SIM elegível pela definição operacional.",
+  "N": 1776,
+  "n": 316,
+  "semente": 2026,
+  "nivel_confianca": 0.95,
+  "margem_erro_planejada": 0.05,
+  "proporcao_planejamento": 0.5,
+  "fracao_amostral": 0.17792792792792791,
+  "duplicatas_mantidas": true,
+  "parametro_h3_mes_referencia": 1.0,
+  "referencia_sinasc": {
+    "proporcao_masculina": 0.5114824552533117,
+    "nascidos_vivos": 197780,
+    "ano_inicial": 2011,
+    "ano_final": 2021
+  },
+  "base_completa": {
+    "linhas": 135548,
+    "variaveis": 14,
+    "obitos_nao_fetais": 133787,
+    "obitos_fetais": 1761,
+    "linhas_duplicadas": 602,
+    "obitos_por_ano": {
+      "2011": 11520,
+      "2012": 11261,
+      "2013": 11713,
+      "2014": 11816,
+      "2015": 11454,
+      "2016": 12557,
+      "2017": 12074,
+      "2018": 12215,
+      "2019": 12253,
+      "2020": 13153,
+      "2021": 15532
+    }
+  },
+  "populacao": {
+    "n": 1776,
+    "n_sexo_conhecido": 1769,
+    "idade": {
+      "media": 1.4757882882882882,
+      "mediana": 0.0,
+      "moda": 0.0,
+      "desvio_padrao": 2.425808922432087,
+      "variancia": 5.8845489281511245,
+      "minimo": 0.0,
+      "q1": 0.0,
+      "q3": 2.0,
+      "maximo": 11.0
+    },
+    "proporcao_masculina": 0.5488976823063878,
+    "proporcao_mesmo_mes": 0.5274166195590729,
+    "frequencia_sexo": {
+      "FEMININO": 798,
+      "MASCULINO": 971
+    },
+    "frequencia_faixa_idade": {
+      "0–1 mês": 1294,
+      "2–3 meses": 217,
+      "4–5 meses": 93,
+      "6–11 meses": 172
+    },
+    "mesmo_mes_por_sexo": {
+      "FEMININO": {
+        "mesmo_mes": 413,
+        "meses_posteriores": 385
+      },
+      "MASCULINO": {
+        "mesmo_mes": 520,
+        "meses_posteriores": 451
+      }
+    }
+  },
+  "amostra": {
+    "n": 316,
+    "n_sexo_conhecido": 316,
+    "idade": {
+      "media": 1.4240506329113924,
+      "mediana": 0.0,
+      "moda": 0.0,
+      "desvio_padrao": 2.4849880809588476,
+      "variancia": 6.175165762507535,
+      "minimo": 0.0,
+      "q1": 0.0,
+      "q3": 2.0,
+      "maximo": 11.0
+    },
+    "proporcao_masculina": 0.5506329113924051,
+    "proporcao_mesmo_mes": 0.5316455696202531,
+    "frequencia_sexo": {
+      "FEMININO": 142,
+      "MASCULINO": 174
+    },
+    "frequencia_faixa_idade": {
+      "0–1 mês": 236,
+      "2–3 meses": 39,
+      "4–5 meses": 14,
+      "6–11 meses": 27
+    },
+    "mesmo_mes_por_sexo": {
+      "FEMININO": {
+        "mesmo_mes": 73,
+        "meses_posteriores": 69
+      },
+      "MASCULINO": {
+        "mesmo_mes": 95,
+        "meses_posteriores": 79
+      }
+    }
+  },
+  "testes": [
+    {
+      "codigo": "H1",
+      "pergunta": "Os meninos têm, entre os óbitos infantis, participação maior do que entre os nascimentos?",
+      "variavel": "Sexo (masculino entre registros com sexo conhecido)",
+      "justificativa": "A referência π₀ = 51,15% é a proporção de meninos entre os nascidos vivos de Porto Alegre no SINASC (2011–2021). Se o sexo não influenciasse o óbito infantil, a composição dos óbitos repetiria a dos nascimentos; uma proporção maior indica sobremortalidade masculina relativa.",
+      "hipotese_nula": "π ≤ 51,15% (proporção de meninos nos nascimentos)",
+      "hipotese_alternativa": "π > 51,15%",
+      "referencia_nula": 0.5114824552533117,
+      "cauda": "direita",
+      "procedimento": "Teste Z unilateral de 1 proporção; IC de Wald com correção para população finita",
+      "estimativa": 0.5506329113924051,
+      "parametro_populacional": 0.5488976823063878,
+      "intervalo": [
+        0.5009132754214007,
+        0.6003525473634095
+      ],
+      "limite_inferior_unilateral": 0.5089068775455101,
+      "estatistica": 1.535794957697361,
+      "distribuicao": "normal padrão",
+      "graus_liberdade": null,
+      "valor_p": 0.062294338396317754,
+      "rejeita_h0": false,
+      "h0_verdadeira_na_populacao": false,
+      "contem_parametro": true,
+      "classificacao": "Erro tipo II",
+      "n_amostra": 316,
+      "N_populacao": 1769,
+      "condicoes": [
+        "AAS sem reposição; n/N analítico = 17.9%; correção para população finita aplicada.",
+        "Em H₀: 162 sucessos e 154 fracassos esperados (ambos ≥ 10).",
+        "O IC bilateral de 95% descreve a estimativa; a decisão unilateral equivale a comparar π₀ com o limite inferior unilateral de 95%."
+      ],
+      "conclusao": {
+        "amostra": "A amostra não traz evidência suficiente, a 5%, de que a proporção de meninos entre os óbitos infantis supere a dos nascimentos.",
+        "populacao": "Na população, H₀ é falsa, mas a amostra não teve evidência suficiente para rejeitá-la: erro tipo II. O efeito real é pequeno em relação ao erro-padrão de uma amostra de 316 registros (baixo poder do teste)."
+      }
+    },
+    {
+      "codigo": "H2",
+      "pergunta": "A proporção de óbitos registrados no mesmo mês do nascimento difere entre meninas e meninos?",
+      "variavel": "Mesmo mês/ano de nascimento e óbito (diferença registrada de 0 mês)",
+      "justificativa": "O óbito no mesmo mês/ano do nascimento aproxima os óbitos mais precoces (sobretudo neonatais). A pergunta é se essa concentração precoce é diferente entre meninas e meninos.",
+      "cauda": "bilateral",
+      "hipotese_nula": "π_feminino − π_masculino = 0",
+      "hipotese_alternativa": "π_feminino − π_masculino ≠ 0",
+      "procedimento": "Teste Z bilateral de 2 proporções; IC da diferença com correção para população finita",
+      "estimativa": -0.031892504451999426,
+      "parametro_populacional": -0.017986521401340605,
+      "intervalo": [
+        -0.1321862779299639,
+        0.06840126902596504
+      ],
+      "estatistica": -0.6231794766499741,
+      "distribuicao": "normal padrão",
+      "graus_liberdade": null,
+      "valor_p": 0.5331665868723569,
+      "rejeita_h0": false,
+      "h0_verdadeira_na_populacao": false,
+      "contem_parametro": true,
+      "classificacao": "Erro tipo II",
+      "estimativa_feminino": 0.5140845070422535,
+      "estimativa_masculino": 0.5459770114942529,
+      "parametro_feminino": 0.5175438596491229,
+      "parametro_masculino": 0.5355303810504635,
+      "n_amostra": [
+        142,
+        174
+      ],
+      "N_populacao": [
+        798,
+        971
+      ],
+      "condicoes": [
+        "AAS sem reposição; as variâncias dos grupos incluem correção para população finita.",
+        "Contagens esperadas sob H₀ (feminino/masculino): 75/93 eventos e 67/81 não eventos."
+      ],
+      "conclusao": {
+        "amostra": "A amostra não traz evidência suficiente de diferença entre os sexos na proporção de óbitos no mesmo mês/ano do nascimento.",
+        "populacao": "Na população, H₀ é falsa, mas a amostra não teve evidência suficiente para rejeitá-la: erro tipo II. O efeito real é pequeno em relação ao erro-padrão de uma amostra de 316 registros (baixo poder do teste)."
+      }
+    },
+    {
+      "codigo": "H3",
+      "pergunta": "Em média, o óbito infantil ocorre depois do primeiro mês de calendário após o nascimento?",
+      "variavel": "Diferença entre mês/ano do óbito e do nascimento",
+      "justificativa": "Mais da metade dos registros tem diferença 0 (óbito no mesmo mês/ano do nascimento), o que sugere concentração no primeiro mês. A referência μ₀ = 1 mês representa um padrão em que os óbitos ocorrem, em média, até o mês seguinte ao nascimento. Rejeitar H₀ indica que os óbitos pós-neonatais deslocam a média para além desse patamar.",
+      "hipotese_nula": "μ ≤ 1 mês",
+      "hipotese_alternativa": "μ > 1 mês",
+      "referencia_nula": 1.0,
+      "cauda": "direita",
+      "procedimento": "Teste t unilateral de 1 amostra; IC t com correção para população finita",
+      "estimativa": 1.4240506329113924,
+      "parametro_populacional": 1.4757882882882882,
+      "intervalo": [
+        1.1746038236416714,
+        1.6734974421811135
+      ],
+      "limite_inferior_unilateral": 1.2148974893189353,
+      "estatistica": 3.344719466743342,
+      "distribuicao": "t de Student",
+      "graus_liberdade": 315,
+      "valor_p": 0.00046157418702926655,
+      "rejeita_h0": true,
+      "h0_verdadeira_na_populacao": false,
+      "contem_parametro": true,
+      "classificacao": "Rejeição correta de H₀",
+      "desvio_amostral": 2.4849880809588476,
+      "n_amostra": 316,
+      "N_populacao": 1776,
+      "condicoes": [
+        "AAS sem reposição; n/N = 17.8%; correção para população finita aplicada.",
+        "A variável tem resolução mensal e distribuição assimétrica à direita; com n = 316 o TCL sustenta a aproximação t para a média, mas a idade é operacional e aproximada.",
+        "O IC bilateral de 95% descreve a estimativa; a decisão unilateral equivale a comparar μ₀ com o limite inferior unilateral de 95%."
+      ],
+      "conclusao": {
+        "amostra": "A amostra indica que a idade média aproximada ao óbito supera 1 mês: apesar da concentração no mês do nascimento, os óbitos pós-neonatais elevam a média.",
+        "populacao": "Na população, H₀ é de fato falsa: a decisão tomada com a amostra está correta."
+      }
+    },
+    {
+      "codigo": "H4",
+      "pergunta": "A idade média aproximada ao óbito difere entre meninas e meninos?",
+      "variavel": "Diferença entre mês/ano do óbito e do nascimento",
+      "justificativa": "Complementa H2 com a variável quantitativa: verifica se o momento médio do óbito infantil é diferente entre os sexos.",
+      "cauda": "bilateral",
+      "hipotese_nula": "μ_feminino − μ_masculino = 0",
+      "hipotese_alternativa": "μ_feminino − μ_masculino ≠ 0",
+      "procedimento": "Teste t bilateral de Welch; IC da diferença com correção para população finita",
+      "estimativa": 0.36813987372510937,
+      "parametro_populacional": 0.12353747396297132,
+      "intervalo": [
+        -0.14171335421933995,
+        0.8779931016695587
+      ],
+      "estatistica": 1.421423139677865,
+      "distribuicao": "t de Student (Welch)",
+      "graus_liberdade": 276.1413375310259,
+      "valor_p": 0.15632212560294387,
+      "rejeita_h0": false,
+      "h0_verdadeira_na_populacao": false,
+      "contem_parametro": true,
+      "classificacao": "Erro tipo II",
+      "estimativa_feminino": 1.6267605633802817,
+      "estimativa_masculino": 1.2586206896551724,
+      "parametro_feminino": 1.5488721804511278,
+      "parametro_masculino": 1.4253347064881565,
+      "n_amostra": [
+        142,
+        174
+      ],
+      "N_populacao": [
+        798,
+        971
+      ],
+      "condicoes": [
+        "AAS sem reposição; FPC aplicada separadamente por sexo (n/N: 142/798 e 174/971).",
+        "Cada grupo tem n > 30 (142 e 174); a média é analisada pela aproximação t de Welch."
+      ],
+      "conclusao": {
+        "amostra": "A amostra não traz evidência suficiente de diferença entre os sexos na idade média aproximada ao óbito.",
+        "populacao": "Na população, H₀ é falsa, mas a amostra não teve evidência suficiente para rejeitá-la: erro tipo II. O efeito real é pequeno em relação ao erro-padrão de uma amostra de 316 registros (baixo poder do teste)."
+      }
+    }
+  ],
+  "ressalva": "Os resultados descrevem a composição dos registros de óbito infantil; não estimam risco causal de mortalidade por sexo. As datas disponíveis contêm apenas mês e ano."
+}

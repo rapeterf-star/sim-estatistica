@@ -1,0 +1,26 @@
+.venv/
+__pycache__/
+*.py[cod]
+.streamlit/secrets.toml
+
+# Microdata and record-level derivatives remain local.
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# Data dictionary stays local until its redistribution licence is confirmed.
+docs/fontes/*.pdf
+
+# Video and delivery preparation material.
+*.mp4
+*.m4a
+*.zip
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+latex_build/
+docs/build/
+/relatorio_final_sim.pdf
