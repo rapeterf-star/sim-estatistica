@@ -12,7 +12,8 @@ Depois de concluir o SINASC, o mesmo desenho amostral (amostragem aleatória sim
 
 O aplicativo Streamlit tem três painéis: **População**, **Amostra** e **Inferência**.
 
-- Aplicativo: _link a inserir após a publicação_
+- Aplicativo: https://sim-poa-estatistica.streamlit.app/
+- Relatório em PDF: [docs/relatorio_final_sim.pdf](docs/relatorio_final_sim.pdf)
 
 ## Fonte dos dados
 

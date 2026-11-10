@@ -170,9 +170,10 @@ O painel de inferência apresenta para cada hipótese o enunciado, as hipóteses
 ## 8. Fonte, painéis e entrega
 
 - **Base original:** [SIM — Dados Abertos de Porto Alegre](https://dadosabertos.poa.br/dataset/mortalidade-e-obitos).
-- **Painel 1:** população — link será inserido após publicação.
-- **Painel 2:** amostra — link será inserido após publicação.
-- **Painel 3:** inferência — link será inserido após publicação.
-- **Vídeo de apresentação (máximo de cinco minutos):** link será inserido após publicação no YouTube.
+- **Painel 1 — população:** https://sim-poa-estatistica.streamlit.app/Populacao
+- **Painel 2 — amostra:** https://sim-poa-estatistica.streamlit.app/Amostra
+- **Painel 3 — inferência:** https://sim-poa-estatistica.streamlit.app/Inferencia
+- **Código e documentação:** https://github.com/rapeterf-star/sim-estatistica
+- **Estudo principal (SINASC):** https://sinasc-poa-estatistica.streamlit.app/. O [vídeo de apresentação](https://youtu.be/eV0wwY2JIuE) do estudo principal menciona este estudo complementar ao final.
 
 Os arquivos com registros individuais permanecem locais. A aplicação utiliza o resumo de estatísticas agregadas, sem identificadores ou linhas individuais.
