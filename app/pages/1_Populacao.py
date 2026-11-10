@@ -1,4 +1,12 @@
+import sys
+from pathlib import Path
+
 import streamlit as st
+
+# Permite abrir esta página também como arquivo principal do Streamlit.
+RAIZ = Path(__file__).resolve().parents[2]
+if str(RAIZ) not in sys.path:
+    sys.path.insert(0, str(RAIZ))
 
 from src.painel_sim import (
     carregar_resumo,
